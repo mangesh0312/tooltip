@@ -1,25 +1,90 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./index.css";
+import Tooltip from "./Tooltip";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      positoin: "top",
+      hovering: false,
+    };
+  }
+
+  handleClick = (pos) => {
+    this.setState({
+      position: pos,
+    });
+  };
+
+  handleMouseEnter = () => {
+    this.setState({ hovering: true });
+  };
+
+  handleMouseLeave = () => {
+    this.setState({ hovering: false });
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <h1>Tooltip</h1>
+        <div className="btn-position">
+          <button
+            className="btn-grp"
+            onClick={(e) => {
+              this.handleClick("top");
+            }}
+          >
+            Top
+          </button>
+
+          <button
+            className="btn-grp"
+            onClick={(e) => {
+              this.handleClick("left");
+            }}
+          >
+            Left
+          </button>
+
+          <button
+            className="btn-grp"
+            onClick={(e) => {
+              this.handleClick("right");
+            }}
+          >
+            Right
+          </button>
+
+          <button
+            className="btn-grp"
+            onClick={(e) => {
+              this.handleClick("down");
+            }}
+          >
+            Bottom
+          </button>
+        </div>
+
+        <div id="button-container">
+          <button
+            className="hover-btn"
+            onMouseOver={this.handleMouseEnter}
+            onMouseOut={this.handleMouseLeave}
+          >
+            Hover Over Me!!!
+          </button>
+          {this.state.hovering && (
+            <Tooltip
+              position={this.state.position}
+              text={"Thanks for hover over me"}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
